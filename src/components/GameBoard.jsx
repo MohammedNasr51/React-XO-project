@@ -5,15 +5,16 @@ const initialGameBoard = [
     [null, null, null],
 ]
 
-export default function GameBoard() {
+export default function GameBoard({activePlayerSymbol, onSelectPlayer }) {
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     const handleCellClick = (rowIndex,colIndex)=> {
         setGameBoard((prevGameBoard)=>{
             const updatedGameBoard = [...prevGameBoard.map(innerArray=>[...innerArray])];
-            updatedGameBoard[rowIndex][colIndex] = 'X';
+            updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
             return updatedGameBoard;
         })
+        onSelectPlayer();
     }
     return (
         <ol id='game-board'>
@@ -22,7 +23,7 @@ export default function GameBoard() {
                     <ol>
                         {row.map((playerSympol, colIndex) =>
                             <li key={colIndex}>
-                                <button onClick={()=>handleCellClick(rowIndex,colIndex)}>
+                                <button onClick={()=>handleCellClick(rowIndex,colIndex)} >
                                     {playerSympol}
                                 </button>
                             </li>
