@@ -1,11 +1,10 @@
-import { useState } from "react"
 const initialGameBoard = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
 ]
 
-export default function GameBoard({ onSelectPlayer }) {
+export default function GameBoard({ onSelectSquare }) {
     // const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     // const handleCellClick = (rowIndex,colIndex)=> {
@@ -23,7 +22,7 @@ export default function GameBoard({ onSelectPlayer }) {
                     <ol>
                         {row.map((playerSympol, colIndex) =>
                             <li key={colIndex}>
-                                <button onClick={()=>handleCellClick(rowIndex,colIndex)} >
+                                <button onClick={onSelectSquare} >
                                     {playerSympol}
                                 </button>
                             </li>
