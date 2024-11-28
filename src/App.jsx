@@ -10,7 +10,7 @@ function App() {
     setTurnsBoard((prevTurnsBoard) => {
       let curruntPlayer = 'X'; // we use this instead of activePlayer because activePlayer is not updated yet when this function is called and because this is another state 
 
-      if (prevTurnsBoard.length > 0 && prevTurnsBoard[0].Player === 'X') {
+      if (prevTurnsBoard.length > 0 && prevTurnsBoard[0].player === 'X') {
         curruntPlayer = 'O';
       }
 
@@ -25,7 +25,7 @@ function App() {
           <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'} />
           <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'} />
         </ol>
-        <GameBoard activePlayerSymbol={activePlayer} onSelectSquare={handleSelectedPlayer} />
+        <GameBoard turns={turnsBoard} onSelectSquare={handleSelectedPlayer} />
       </div>
       <Log />
     </main>
