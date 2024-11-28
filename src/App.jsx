@@ -1,7 +1,9 @@
 import { useState } from "react"
 import GameBoard from "./components/GameBoard"
 import Player from "./components/Player"
+import Log from "./components/Log"
 function App() {
+  const [turnsBoard, setTurnsBoard] = useState([]);
   const [activePlayer , setActivePlayer] = useState('X');
   function handleSelectedPlayer(){
     setActivePlayer((prevActivePlayer)=> prevActivePlayer === 'X' ? 'O' : 'X');
@@ -15,6 +17,7 @@ function App() {
         </ol>
         <GameBoard activePlayerSymbol={activePlayer} onSelectPlayer={handleSelectedPlayer} />
       </div>
+      <Log />
     </main>
   )
 }
