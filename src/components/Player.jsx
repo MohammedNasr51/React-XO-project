@@ -12,7 +12,6 @@ export default function Player({ initialName, symbol }) {
 
     if (isEditing) {
         PlayerName = <input type="text" defaultValue={newPlayerName} onChange={handleChangeName} />;
-
     }
     return (
         <li>
