@@ -2,17 +2,25 @@ import { useState } from "react"
 import GameBoard from "./components/GameBoard"
 import Player from "./components/Player"
 import Log from "./components/Log"
+
+function driveCurrentPlayer(turns) {
+  let curruntPlayer = 'X'; // we use this instead of activePlayer because activePlayer is not updated yet when this function is called and because this is another state we can use it to drive the current player
+
+  if (turns.length > 0 && turns[0].player === 'X') {
+    curruntPlayer = 'O';
+  }
+  return curruntPlayer;
+}
+
 function App() {
   const [turnsBoard, setTurnsBoard] = useState([]);
-  const [activePlayer, setActivePlayer] = useState('X');
-  function handleSelectedPlayer(rowIndex, colIndex) {
-    setActivePlayer((prevActivePlayer) => prevActivePlayer === 'X' ? 'O' : 'X');
-    setTurnsBoard((prevTurnsBoard) => {
-      let curruntPlayer = 'X'; // we use this instead of activePlayer because activePlayer is not updated yet when this function is called and because this is another state 
+  const activePlayer = driveCurrentPlayer(turnsBoard);
 
-      if (prevTurnsBoard.length > 0 && prevTurnsBoard[0].player === 'X') {
-        curruntPlayer = 'O';
-      }
+  function handleSelectedPlayer(rowIndex, colIndex) {
+
+    setTurnsBoard((prevTurnsBoard) => {
+
+      let curruntPlayer = driveCurrentPlayer(prevTurnsBoard);
 
       let updatedTurnsBoard = [{ square: { row: rowIndex, col: colIndex }, player: curruntPlayer }, ...prevTurnsBoard];
       return updatedTurnsBoard;
