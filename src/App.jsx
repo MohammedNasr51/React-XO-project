@@ -24,7 +24,7 @@ function App() {
   const [turnsBoard, setTurnsBoard] = useState([]);
   const activePlayer = driveCurrentPlayer(turnsBoard);
 
-  let gameBoard = initialGameBoard;
+  let gameBoard = [...initialGameBoard.map((row) => [...row])];
 
   for (const turn of turnsBoard) {
     const { square, player } = turn;
@@ -40,7 +40,6 @@ function App() {
     const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
     const secondSquareSymbol = gameBoard[combination[1].row][combination[1].col];
     const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].col];
-    console.log(firstSquareSymbol, secondSquareSymbol, thirdSquareSymbol,combination,gameBoard);
     if (firstSquareSymbol && firstSquareSymbol === secondSquareSymbol && firstSquareSymbol === thirdSquareSymbol) {
       winner = firstSquareSymbol;
     }
@@ -55,6 +54,9 @@ function App() {
       return updatedTurnsBoard;
     })
   }
+  function handleRestart(){
+    setTurnsBoard([]);
+  }
 
   let hasDrow = turnsBoard.length === 9 && !winner; // if we clicked on all squares and there is no winner then it is a drow
   return (
@@ -64,7 +66,7 @@ function App() {
           <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'} />
           <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'} />
         </ol>
-        {(winner || hasDrow) && <GameOver winner={winner} />}
+        {(winner || hasDrow) && <GameOver winner={winner} onRematch={handleRestart} />}
         <GameBoard board={gameBoard} onSelectSquare={handleSelectedPlayer} />
 
       </div>
