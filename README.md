@@ -59,7 +59,7 @@ React-XO-project/
 ```
 
 ## Screenshots
-![Game Board](https://via.placeholder.com/600x400?text=Game+Board+Screenshot)
+![Game Board]([https://via.placeholder.com/600x400?text=Game+Board+Screenshot](https://drive.google.com/file/d/1-GeWozqlKI6sLxvX1YJlkm7yHYu0F7Hw/view?usp=sharing))
 
 ## Future Improvements
 - Add support for AI to play against the user.
@@ -68,9 +68,6 @@ React-XO-project/
 
 ## Contributions
 Contributions are welcome! Feel free to open issues or submit pull requests.
-
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgments
 Special thanks to all the resources and tutorials that inspired the creation of this project.
