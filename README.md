@@ -59,7 +59,7 @@ React-XO-project/
 ```
 
 ## Screenshots
-![Game Board](https://drive.google.com/file/d/1-GeWozqlKI6sLxvX1YJlkm7yHYu0F7Hw/view?usp=sharing)
+![Game Board]([https://drive.google.com/file/d/1-GeWozqlKI6sLxvX1YJlkm7yHYu0F7Hw/view?usp=sharing])
 
 ## Future Improvements
 - Add support for AI to play against the user.
