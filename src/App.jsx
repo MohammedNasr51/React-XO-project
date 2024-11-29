@@ -3,6 +3,7 @@ import GameBoard from "./components/GameBoard"
 import Player from "./components/Player"
 import Log from "./components/Log"
 import { WINNING_COMBINATIONS } from "./winning-combinations"
+import GameOver from "./components/GameOver"
 
 const initialGameBoard = [
   [null, null, null],
@@ -54,6 +55,8 @@ function App() {
       return updatedTurnsBoard;
     })
   }
+
+  let hasDrow = turnsBoard.length === 9 && !winner; // if we clicked on all squares and there is no winner then it is a drow
   return (
     <main>
       <div id="game-container">
@@ -61,7 +64,7 @@ function App() {
           <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'} />
           <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'} />
         </ol>
-        {winner && <p>The winner is {winner}</p>}
+        {(winner || hasDrow) && <GameOver winner={winner} />}
         <GameBoard board={gameBoard} onSelectSquare={handleSelectedPlayer} />
 
       </div>
