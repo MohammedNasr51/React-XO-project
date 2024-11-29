@@ -23,6 +23,7 @@ function driveCurrentPlayer(turns) {
 function App() {
   const [turnsBoard, setTurnsBoard] = useState([]);
   const activePlayer = driveCurrentPlayer(turnsBoard);
+  const [Players, setPlayers] = useState([{ X: 'Player 1' ,  O: 'Player 2' }]);
 
   let gameBoard = [...initialGameBoard.map((row) => [...row])];
 
@@ -31,17 +32,16 @@ function App() {
     const { row, col } = square;
     gameBoard[row][col] = player;
   }
-  
+
   let winner;
   // this is the winning combinations loop i wrote it here bacause the app component will be re-rendered every time we click on square so we dont need another state to store the winner
   for (const combination of WINNING_COMBINATIONS) {
-
 
     const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
     const secondSquareSymbol = gameBoard[combination[1].row][combination[1].col];
     const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].col];
     if (firstSquareSymbol && firstSquareSymbol === secondSquareSymbol && firstSquareSymbol === thirdSquareSymbol) {
-      winner = firstSquareSymbol;
+      winner = Players[firstSquareSymbol];
     }
   }
   function handleSelectedPlayer(rowIndex, colIndex) {
@@ -54,17 +54,26 @@ function App() {
       return updatedTurnsBoard;
     })
   }
-  function handleRestart(){
+  function handleRestart() {
     setTurnsBoard([]);
   }
 
+  function handleChangePlayerName(symbol, newPlayerName) {
+    setPlayers((prevPlayers) => {
+      return {
+        ...prevPlayers,
+        [symbol]: newPlayerName
+      }
+    })
+  }
   let hasDrow = turnsBoard.length === 9 && !winner; // if we clicked on all squares and there is no winner then it is a drow
   return (
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
-          <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'} />
-          <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'} />
+          <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'} onChangeName={handleChangePlayerName} />
+          <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'}
+            onChangeName={handleChangePlayerName} />
         </ol>
         {(winner || hasDrow) && <GameOver winner={winner} onRematch={handleRestart} />}
         <GameBoard board={gameBoard} onSelectSquare={handleSelectedPlayer} />
