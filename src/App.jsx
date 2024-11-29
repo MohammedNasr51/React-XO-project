@@ -2,6 +2,13 @@ import { useState } from "react"
 import GameBoard from "./components/GameBoard"
 import Player from "./components/Player"
 import Log from "./components/Log"
+import { WINNING_COMBINATIONS } from "./winning-combinations"
+
+const initialGameBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
 function driveCurrentPlayer(turns) {
   let curruntPlayer = 'X'; // we use this instead of activePlayer because activePlayer is not updated yet when this function is called and because this is another state we can use it to drive the current player
@@ -16,6 +23,27 @@ function App() {
   const [turnsBoard, setTurnsBoard] = useState([]);
   const activePlayer = driveCurrentPlayer(turnsBoard);
 
+  let gameBoard = initialGameBoard;
+
+  for (const turn of turnsBoard) {
+    const { square, player } = turn;
+    const { row, col } = square;
+    gameBoard[row][col] = player;
+  }
+  
+  let winner;
+  // this is the winning combinations loop i wrote it here bacause the app component will be re-rendered every time we click on square so we dont need another state to store the winner
+  for (const combination of WINNING_COMBINATIONS) {
+
+
+    const firstSquareSymbol = gameBoard[combination[0].row][combination[0].col];
+    const secondSquareSymbol = gameBoard[combination[1].row][combination[1].col];
+    const thirdSquareSymbol = gameBoard[combination[2].row][combination[2].col];
+    console.log(firstSquareSymbol, secondSquareSymbol, thirdSquareSymbol,combination,gameBoard);
+    if (firstSquareSymbol && firstSquareSymbol === secondSquareSymbol && firstSquareSymbol === thirdSquareSymbol) {
+      winner = firstSquareSymbol;
+    }
+  }
   function handleSelectedPlayer(rowIndex, colIndex) {
 
     setTurnsBoard((prevTurnsBoard) => {
@@ -33,7 +61,9 @@ function App() {
           <Player initialName='Player 1' symbol='X' isActive={activePlayer === 'X'} />
           <Player initialName='Player 2' symbol='O' isActive={activePlayer === 'O'} />
         </ol>
-        <GameBoard turns={turnsBoard} onSelectSquare={handleSelectedPlayer} />
+        {winner && <p>The winner is {winner}</p>}
+        <GameBoard board={gameBoard} onSelectSquare={handleSelectedPlayer} />
+
       </div>
       <Log turns={turnsBoard} />
     </main>
